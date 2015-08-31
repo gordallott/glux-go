@@ -2,6 +2,7 @@ package hueControl
 
 import (
 	"github.com/bklimt/hue"
+	"log"
 	"math"
 )
 
@@ -55,6 +56,7 @@ func TurnLightsOn(hueBridge *hue.Hue) error {
 }
 
 func SetBrightness(hueBridge *hue.Hue, brightness float64) error {
+	log.Printf("glux: setting brightness to %v\n", brightness)
 	return setBrightnessInternal(hueBridge, StateOn, brightness)
 }
 
@@ -72,7 +74,7 @@ func setBrightnessInternal(hueBridge *hue.Hue, onOffState int, brightness float6
 
 	var lightRequest hue.PutLightRequest
 	stateOn := true
-	stateBri := int(math.Max(math.Min(brightness, 100), 0))
+	stateBri := int(math.Max(math.Min(brightness*100, 100), 0))
 	lightRequest.On = &stateOn
 	lightRequest.Bri = &stateBri
 

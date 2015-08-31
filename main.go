@@ -32,6 +32,8 @@ func animationLoop(brightnessValues chan float64) {
 			default:
 			}
 
+			log.Printf("glux: targetBrightness: %v\n", targetBrightness)
+
 			hueBridge := hueControl.GetHueBridge()
 			lightsState, _ := hueControl.AreLightsOn(hueBridge)
 			lightsBrightness, _ := hueControl.GetLightsBrightness(hueBridge)
