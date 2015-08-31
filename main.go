@@ -85,19 +85,22 @@ func mainLoopFunc() {
 
 		// if we get here then the lights are on and we should start doing clever things
 
-		timeOfDayBrightness := sunsetControl.TimeOfDayBrightnessCalc(time.Now()) * BrightnessFull
+		timeOfDayBrightness := sunsetControl.TimeOfDayBrightnessCalc(time.Now())
 		var plexBrightness float64
 		switch plexControl.GetPlexState() {
 		case plexControl.StatePlaying:
-			plexBrightness = BrightnessDim
+			plexBrightness = 0.2
 		case plexControl.StatePaused:
-			plexBrightness = BrightnessNominal
+			plexBrightness = 0.5
 		case plexControl.StateStopped:
-			plexBrightness = BrightnessFull
+			plexBrightness = 1.0
 		}
 
+		log.Printf("timeOfDayBrightness: %v\n", timeOfDayBrightness)
+		log.Printf("plexBrightness: %v\n", plexBrightness)
+
 		totalBrightness := timeOfDayBrightness * plexBrightness
-		brightnessMessages <- totalBrightness
+		brightnessMessages <- totalBrightness * BrightnessFull
 	}
 }
 

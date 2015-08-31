@@ -1,7 +1,7 @@
 package hueControl
 
 import (
-	"github.com/bklimt/hue"
+	"github.com/gordallott/hue"
 	"log"
 	"math"
 )

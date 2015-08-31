@@ -22,11 +22,12 @@ func SecondsUntilNextEvent(currentTime time.Time) int {
 	} else if currentTime.After(sunsetTime) && currentTime.Before(duskTime) {
 		SecondsUntilNextEvent = 60.0
 	} else {
-		var tomorrow = time.Date(currentTime.Year(),
+		/*var tomorrow = time.Date(currentTime.Year(),
 			currentTime.Month(),
 			currentTime.Day()+1,
 			0, 0, 0, 0, currentTime.Location())
-		SecondsUntilNextEvent = tomorrow.Sub(currentTime).Seconds() + 60.0
+		SecondsUntilNextEvent = tomorrow.Sub(currentTime).Seconds() + 60.0*/
+		SecondsUntilNextEvent = -1
 	}
 
 	return int(math.Ceil(SecondsUntilNextEvent))
