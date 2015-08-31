@@ -32,6 +32,11 @@ func GetPlexState() int {
 	body, _ := ioutil.ReadAll(resp.Body)
 
 	match := re.FindStringSubmatch(string(body))
+
+	if len(match) < 1 {
+		return StateStopped
+	}
+
 	result := make(map[string]string)
 	for i, name := range re.SubexpNames() {
 		result[name] = match[i]

@@ -2,6 +2,7 @@ package hueControl
 
 import (
 	"github.com/bklimt/hue"
+	"math"
 )
 
 const (
@@ -16,9 +17,9 @@ func AreLightsOn(hueBridge *hue.Hue) (bool, error) {
 		return false, err
 	}
 
-	for key, _ := range resp {
+	for light, _ := range resp {
 		var lightResp hue.GetLightResponse
-		err := hueBridge.GetLight(key, &lightResp)
+		err := hueBridge.GetLight(light, &lightResp)
 		if err != nil {
 			continue
 		}
@@ -28,6 +29,58 @@ func AreLightsOn(hueBridge *hue.Hue) (bool, error) {
 	}
 
 	return false, nil
+}
+
+func GetLightsBrightness(hueBridge *hue.Hue) (float64, error) {
+	var resp hue.GetLightsResponse
+	err := hueBridge.GetLights(&resp)
+	if err != nil {
+		return 0.0, err
+	}
+
+	for light, _ := range resp {
+		var lightResp hue.GetLightResponse
+		err := hueBridge.GetLight(light, &lightResp)
+		if err != nil {
+			continue
+		}
+		return float64(lightResp.State.Bri) / 100.0, nil
+	}
+
+	return 0.0, nil
+}
+
+func TurnLightsOn(hueBridge *hue.Hue) error {
+	return setBrightnessInternal(hueBridge, StateOn, 0.0)
+}
+
+func SetBrightness(hueBridge *hue.Hue, brightness float64) error {
+	return setBrightnessInternal(hueBridge, StateOn, brightness)
+}
+
+const (
+	StateOn = iota
+	StateOff
+)
+
+func setBrightnessInternal(hueBridge *hue.Hue, onOffState int, brightness float64) error {
+	var resp hue.GetLightsResponse
+	err := hueBridge.GetLights(&resp)
+	if err != nil {
+		return err
+	}
+
+	var lightRequest hue.PutLightRequest
+	stateOn := true
+	stateBri := int(math.Max(math.Min(brightness, 100), 0))
+	lightRequest.On = &stateOn
+	lightRequest.Bri = &stateBri
+
+	for light, _ := range resp {
+		hueBridge.PutLight(light, &lightRequest)
+	}
+
+	return nil
 }
 
 func GetHueBridge() *hue.Hue {
