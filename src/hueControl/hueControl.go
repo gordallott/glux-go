@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	HUE_IP       = "192.168.1.27"
+	HUE_IP       = "192.168.1.32"
 	HUE_USERNAME = "d8cc566111b90642a0bffb238b703df"
 )
 
@@ -45,7 +45,7 @@ func GetLightsBrightness(hueBridge *hue.Hue) (float64, error) {
 		if err != nil {
 			continue
 		}
-		return float64(lightResp.State.Bri) / 100.0, nil
+		return float64(lightResp.State.Bri) / 255.0, nil
 	}
 
 	return 0.0, nil
