@@ -74,7 +74,7 @@ func setBrightnessInternal(hueBridge *hue.Hue, onOffState int, brightness float6
 
 	var lightRequest hue.PutLightRequest
 	stateOn := true
-	stateBri := int(math.Max(math.Min(brightness*100, 100), 0))
+	stateBri := int(math.Max(math.Min(brightness*255, 255), 0))
 	lightRequest.On = &stateOn
 	lightRequest.Bri = &stateBri
 
