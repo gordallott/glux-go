@@ -22,12 +22,13 @@ func GetPlexState() int {
 	re := regexp.MustCompile("state=\"(?P<state>(playing|paused|stopped))\" ")
 
 	resp, err := http.Get(PLEX_HOSTNAME + "/status/sessions")
-	defer resp.Body.Close()
-
+	
 	if err != nil {
 		log.Printf("Error getting plex status: %s", err)
 		return StateStopped
 	}
+	
+	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
 
