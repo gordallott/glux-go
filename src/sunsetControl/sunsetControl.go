@@ -11,7 +11,7 @@ const (
 	AUTOLIGHT_LONG = -2.443821
 )
 
-func SecondsUntilNextEvent(currentTime time.Time) int {
+func SecondsUntilSunsetEvent(currentTime time.Time) int {
 	sunTimes := suncalc.SunTimes(currentTime, AUTOLIGHT_LAT, AUTOLIGHT_LONG)
 	sunsetTime := sunTimes["sunset"]
 	duskTime := sunTimes["dusk"]
@@ -31,6 +31,16 @@ func SecondsUntilNextEvent(currentTime time.Time) int {
 	}
 
 	return int(math.Ceil(SecondsUntilNextEvent))
+}
+
+func SecondsUntilSunriseEvent(currentTime time.Time) int {
+	sunTimes := suncalc.SunTimes(currentTime, AUTOLIGHT_LAT, AUTOLIGHT_LONG)
+	sunriseTime := sunTimes["dawn"]
+	
+	year, month, day := sunriseTime.Date()
+	newSunriseTime := time.Date(year, month, day, 2, 30, 0, 0, currentTime.Location())
+
+	return int(math.Ceil(newSunriseTime.Sub(currentTime).Seconds()));
 }
 
 func TimeOfDayBrightnessCalc(currentTime time.Time) float64 {
