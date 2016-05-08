@@ -64,7 +64,7 @@ func mainLoopFunc() {
 		lightsState, _ := hueControl.AreLightsOn(hueBridge)
 
 		secondsUntilSunsetEvent := sunsetControl.SecondsUntilSunsetEvent(time.Now())
-		secondsUntilSunriseEvent := sunsetControl.SecondsUntilSunriseEvent(time.Now());
+		secondsUntilSunriseEvent := sunsetControl.SecondsUntilSunriseEvent(time.Now())
 		plexState := plexControl.GetPlexState()
 
 		fmt.Printf("Lights state is %v\n", lightsState)
@@ -80,12 +80,12 @@ func mainLoopFunc() {
 			hueControl.TurnLightsOn(hueBridge)
 			lightsState, _ = hueControl.AreLightsOn(hueBridge)
 		}
-		
+
 		// if the lights are on, we probably want to turn them off at sunrise, we don't do this in a clever way, they just turn off instantly
 		if secondsUntilSunriseEvent < 120 && secondsUntilSunriseEvent >= 0 {
 			log.Printf("only %v seconds until sunrise event, turning lights off")
 			hueControl.TurnLightsOff(hueBridge)
-			lightsState, _ = hueControl.AreLightsOn(hueBridge);
+			lightsState, _ = hueControl.AreLightsOn(hueBridge)
 		}
 
 		if lightsState == false {

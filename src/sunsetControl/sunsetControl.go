@@ -17,11 +17,11 @@ func SecondsUntilSunsetEvent(currentTime time.Time) int {
 	duskTime := sunTimes["dusk"]
 
 	var SecondsUntilNextEvent float64
-	if currentTime.Before(sunsetTime) && currentTime.Before(duskTime) {
+	if currentTime.Before(sunsetTime) && currentTime.Before(duskTime) { // before sunset starts
 		SecondsUntilNextEvent = sunsetTime.Sub(currentTime).Seconds()
-	} else if currentTime.After(sunsetTime) && currentTime.Before(duskTime) {
-		SecondsUntilNextEvent = 60.0
-	} else {
+	} else if currentTime.After(sunsetTime) && currentTime.Before(duskTime) { // during sunset
+		SecondsUntilNextEvent = -1
+	} else { // after sunset
 		/*var tomorrow = time.Date(currentTime.Year(),
 			currentTime.Month(),
 			currentTime.Day()+1,
@@ -36,11 +36,11 @@ func SecondsUntilSunsetEvent(currentTime time.Time) int {
 func SecondsUntilSunriseEvent(currentTime time.Time) int {
 	sunTimes := suncalc.SunTimes(currentTime, AUTOLIGHT_LAT, AUTOLIGHT_LONG)
 	sunriseTime := sunTimes["dawn"]
-	
+
 	year, month, day := sunriseTime.Date()
 	newSunriseTime := time.Date(year, month, day, 2, 30, 0, 0, currentTime.Location())
 
-	return int(math.Ceil(newSunriseTime.Sub(currentTime).Seconds()));
+	return int(math.Ceil(newSunriseTime.Sub(currentTime).Seconds()))
 }
 
 func TimeOfDayBrightnessCalc(currentTime time.Time) float64 {
