@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	HUE_IP       = "192.168.1.32"
+	HUE_IP       = "192.168.1.17"
 	HUE_USERNAME = "d8cc566111b90642a0bffb238b703df"
 )
 
@@ -55,6 +55,10 @@ func TurnLightsOn(hueBridge *hue.Hue) error {
 	return setBrightnessInternal(hueBridge, StateOn, 0.0)
 }
 
+func TurnLightsOff(hueBridge *hue.Hue) error { 
+	return setBrightnessInternal(hueBridge, StateOff, 0.0)
+}
+
 func SetBrightness(hueBridge *hue.Hue, brightness float64) error {
 	log.Printf("glux: setting brightness to %v\n", brightness)
 	return setBrightnessInternal(hueBridge, StateOn, brightness)
@@ -73,7 +77,7 @@ func setBrightnessInternal(hueBridge *hue.Hue, onOffState int, brightness float6
 	}
 
 	var lightRequest hue.PutLightRequest
-	stateOn := true
+	stateOn := onOffState < 1
 	stateBri := int(math.Max(math.Min(brightness*255, 255), 0))
 	lightRequest.On = &stateOn
 	lightRequest.Bri = &stateBri
