@@ -1,0 +1,23 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/bklimt/hue",
+			"repository": "https://github.com/bklimt/hue",
+			"revision": "1280b2b672d218055e6d55ab1f09ba8d4e2d559f",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gordallott/hue",
+			"repository": "https://github.com/gordallott/hue",
+			"revision": "960a744ec0f715a57d10a797afb8d9e5617d5e0f",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/muja/suncalc-go",
+			"repository": "https://github.com/muja/suncalc-go",
+			"revision": "77cea98fd55e16d1ff6e131b220012679265096b",
+			"branch": "master"
+		}
+	]
+}
