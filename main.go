@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"plexControl"
+	"ps4control"
 	"sunsetControl"
 	"time"
 )
@@ -37,6 +38,7 @@ func animationLoop(brightnessValues chan float64) {
 			hueBridge := hueControl.GetHueBridge()
 			lightsState, _ := hueControl.AreLightsOn(hueBridge)
 			lightsBrightness, _ := hueControl.GetLightsBrightness(hueBridge)
+			log.Printf("glux: actualbrightnes: %v\n", lightsBrightness)
 
 			if lightsState == true && closeTo(lightsBrightness, targetBrightness) == false {
 
@@ -66,11 +68,13 @@ func mainLoopFunc() {
 		secondsUntilSunsetEvent := sunsetControl.SecondsUntilSunsetEvent(time.Now())
 		secondsUntilSunriseEvent := sunsetControl.SecondsUntilSunriseEvent(time.Now())
 		plexState := plexControl.GetPlexState()
+		ps4State := ps4control.GetPs4State()
 
 		fmt.Printf("Lights state is %v\n", lightsState)
 		fmt.Printf("seconds until sunset event: %v\n", secondsUntilSunsetEvent)
 		fmt.Printf("seconds until sunrise event: %v\n", secondsUntilSunriseEvent)
 		fmt.Printf("plex state: %v\n", plexState)
+		fmt.Printf("ps4 state: %v\n", ps4State)
 
 		// start of actual logic for lights
 		// if lights are off, do nothing. single exception is if it is close to sunset event
@@ -105,10 +109,23 @@ func mainLoopFunc() {
 			plexBrightness = 1.0
 		}
 
+		var ps4Brightness float64
+		switch ps4control.GetPs4State() {
+		case ps4control.StatePlaying:
+			ps4Brightness = 0.2
+		case ps4control.StatePaused:
+			ps4Brightness = 0.5
+		case ps4control.StateStopped:
+			ps4Brightness = 1.0
+		}
+
 		log.Printf("timeOfDayBrightness: %v\n", timeOfDayBrightness)
 		log.Printf("plexBrightness: %v\n", plexBrightness)
+		log.Printf("ps4Brightness: %v\n", ps4Brightness)
 
-		totalBrightness := timeOfDayBrightness * plexBrightness
+		var combBrightness = math.Min(plexBrightness, ps4Brightness)
+
+		totalBrightness := timeOfDayBrightness * combBrightness
 		brightnessMessages <- totalBrightness * BrightnessFull
 	}
 }
