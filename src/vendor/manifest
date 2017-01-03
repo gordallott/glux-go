@@ -4,20 +4,110 @@
 		{
 			"importpath": "github.com/bklimt/hue",
 			"repository": "https://github.com/bklimt/hue",
+			"vcs": "",
 			"revision": "1280b2b672d218055e6d55ab1f09ba8d4e2d559f",
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/davecgh/go-spew/spew",
+			"repository": "https://github.com/davecgh/go-spew",
+			"vcs": "git",
+			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
+			"branch": "master",
+			"path": "/spew",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/proto",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "84af2615df1ba1d35cc975ba94b64ee67d6c196e",
+			"branch": "master",
+			"path": "/proto",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/sortkeys",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "84af2615df1ba1d35cc975ba94b64ee67d6c196e",
+			"branch": "master",
+			"path": "sortkeys",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gogo/protobuf/types",
+			"repository": "https://github.com/gogo/protobuf",
+			"vcs": "git",
+			"revision": "84af2615df1ba1d35cc975ba94b64ee67d6c196e",
+			"branch": "master",
+			"path": "types",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/gordallott/hue",
 			"repository": "https://github.com/gordallott/hue",
+			"vcs": "",
 			"revision": "960a744ec0f715a57d10a797afb8d9e5617d5e0f",
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/hashicorp/go.net/internal/iana",
+			"repository": "https://github.com/hashicorp/go.net",
+			"vcs": "git",
+			"revision": "104dcad90073cd8d1e6828b2af19185b60cf3e29",
+			"branch": "master",
+			"path": "internal/iana",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/hashicorp/go.net/ipv4",
+			"repository": "https://github.com/hashicorp/go.net",
+			"vcs": "git",
+			"revision": "104dcad90073cd8d1e6828b2af19185b60cf3e29",
+			"branch": "master",
+			"path": "/ipv4",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/hashicorp/go.net/ipv6",
+			"repository": "https://github.com/hashicorp/go.net",
+			"vcs": "git",
+			"revision": "104dcad90073cd8d1e6828b2af19185b60cf3e29",
+			"branch": "master",
+			"path": "ipv6",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/hashicorp/mdns",
+			"repository": "https://github.com/hashicorp/mdns",
+			"vcs": "git",
+			"revision": "9d85cf22f9f8d53cb5c81c1b2749f438b2ee333f",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/miekg/dns",
+			"repository": "https://github.com/miekg/dns",
+			"vcs": "git",
+			"revision": "00b8eaaab9411e1ff61e5030ef7e58bed412ad2a",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/muja/suncalc-go",
 			"repository": "https://github.com/muja/suncalc-go",
+			"vcs": "",
 			"revision": "77cea98fd55e16d1ff6e131b220012679265096b",
 			"branch": "master"
+		},
+		{
+			"importpath": "github.com/ninjasphere/go-castv2",
+			"repository": "https://github.com/ninjasphere/go-castv2",
+			"vcs": "git",
+			"revision": "c628dcf318eee67f396e13d6a8ec53d2925c93e3",
+			"branch": "master",
+			"notests": true
 		}
 	]
 }
