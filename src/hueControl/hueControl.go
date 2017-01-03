@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	HUE_IP       = "192.168.1.17"
+	HUE_IP       = "192.168.1.7"
 	HUE_USERNAME = "d8cc566111b90642a0bffb238b703df"
 )
 

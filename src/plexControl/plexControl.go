@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	PLEX_HOSTNAME = "http://192.168.1.14:32400"
+	PLEX_HOSTNAME = "http://localhost:32400"
 )
 
 const (

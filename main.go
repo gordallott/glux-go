@@ -1,6 +1,7 @@
 package main
 
 import (
+	"castcontrol"
 	"fmt"
 	"hueControl"
 	"log"
@@ -13,8 +14,8 @@ import (
 
 const (
 	BrightnessDim     = 0.2
-	BrightnessNominal = 0.4
-	BrightnessFull    = 0.6
+	BrightnessNominal = 0.6
+	BrightnessFull    = 0.8
 	BrightnessTick    = 0.02
 )
 
@@ -69,12 +70,14 @@ func mainLoopFunc() {
 		secondsUntilSunriseEvent := sunsetControl.SecondsUntilSunriseEvent(time.Now())
 		plexState := plexControl.GetPlexState()
 		ps4State := ps4control.GetPs4State()
+		castState := castcontrol.GetCastState()
 
 		fmt.Printf("Lights state is %v\n", lightsState)
 		fmt.Printf("seconds until sunset event: %v\n", secondsUntilSunsetEvent)
 		fmt.Printf("seconds until sunrise event: %v\n", secondsUntilSunriseEvent)
 		fmt.Printf("plex state: %v\n", plexState)
 		fmt.Printf("ps4 state: %v\n", ps4State)
+		fmt.Printf("cast state: %v\n", castState)
 
 		// start of actual logic for lights
 		// if lights are off, do nothing. single exception is if it is close to sunset event
@@ -102,7 +105,7 @@ func mainLoopFunc() {
 		var plexBrightness float64
 		switch plexControl.GetPlexState() {
 		case plexControl.StatePlaying:
-			plexBrightness = 0.2
+			plexBrightness = 0.0
 		case plexControl.StatePaused:
 			plexBrightness = 0.5
 		case plexControl.StateStopped:
@@ -112,21 +115,35 @@ func mainLoopFunc() {
 		var ps4Brightness float64
 		switch ps4control.GetPs4State() {
 		case ps4control.StatePlaying:
-			ps4Brightness = 0.2
+			ps4Brightness = 0.0
 		case ps4control.StatePaused:
 			ps4Brightness = 0.5
 		case ps4control.StateStopped:
 			ps4Brightness = 1.0
 		}
 
+		var castBrightness float64
+		switch castcontrol.GetCastState() {
+		case castcontrol.StatePlaying:
+			castBrightness = 0.0
+		case castcontrol.StatePaused:
+			castBrightness = 0.5
+		case castcontrol.StateStopped:
+			castBrightness = 1.0
+		}
+
 		log.Printf("timeOfDayBrightness: %v\n", timeOfDayBrightness)
 		log.Printf("plexBrightness: %v\n", plexBrightness)
 		log.Printf("ps4Brightness: %v\n", ps4Brightness)
+		log.Printf("castBrightness: %v\n", castBrightness)
 
 		var combBrightness = math.Min(plexBrightness, ps4Brightness)
+		combBrightness = math.Min(combBrightness, castBrightness)
 
 		totalBrightness := timeOfDayBrightness * combBrightness
 		brightnessMessages <- totalBrightness * BrightnessFull
+
+		log.Printf("total brightness: %v\n", totalBrightness*BrightnessFull)
 	}
 }
 
