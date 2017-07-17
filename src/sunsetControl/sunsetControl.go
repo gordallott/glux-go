@@ -1,6 +1,7 @@
 package sunsetControl
 
 import (
+	"fmt"
 	"github.com/muja/suncalc-go"
 	"math"
 	"time"
@@ -46,18 +47,26 @@ func SecondsUntilSunriseEvent(currentTime time.Time) int {
 func TimeOfDayBrightnessCalc(currentTime time.Time) float64 {
 	sunTimes := suncalc.SunTimes(currentTime, AUTOLIGHT_LAT, AUTOLIGHT_LONG)
 	sunsetTime := sunTimes["sunset"]
+	sunriseTime := sunTimes["sunrise"]
+	lightsOnStartTime := sunsetTime.Add(-time.Hour)
 	duskTime := sunTimes["dusk"]
 
-	if currentTime.Before(sunsetTime) {
+	fmt.Printf("sunsettime: %s\n", sunsetTime)
+	fmt.Printf("duskTime: %s\n", duskTime)
+	fmt.Printf("sunriseTime: %s\n", sunriseTime)
+
+	if currentTime.Before(lightsOnStartTime) && currentTime.After(sunriseTime) {
 		return 0.0
 	}
 
-	if currentTime.After(duskTime) {
+	if currentTime.After(duskTime) || currentTime.Before(sunriseTime) {
 		return 1.0
 	}
 
-	sunsetDuration := duskTime.Sub(sunsetTime).Seconds()
-	secondsSinceSunset := currentTime.Sub(sunsetTime).Seconds()
+	sunsetDuration := duskTime.Sub(lightsOnStartTime).Seconds()
+	secondsSinceSunset := currentTime.Sub(lightsOnStartTime).Seconds()
+
+	fmt.Printf("SunsetDuration: %v\n SecondsSinceSunset: %v\n", sunsetDuration, secondsSinceSunset)
 
 	return secondsSinceSunset / sunsetDuration
 }

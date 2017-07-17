@@ -132,10 +132,10 @@ func mainLoopFunc() {
 			castBrightness = 1.0
 		}
 
-		log.Printf("timeOfDayBrightness: %v\n", timeOfDayBrightness)
-		log.Printf("plexBrightness: %v\n", plexBrightness)
-		log.Printf("ps4Brightness: %v\n", ps4Brightness)
-		log.Printf("castBrightness: %v\n", castBrightness)
+		fmt.Printf("timeOfDayBrightness: %v\n", timeOfDayBrightness)
+		fmt.Printf("plexBrightness: %v\n", plexBrightness)
+		fmt.Printf("ps4Brightness: %v\n", ps4Brightness)
+		fmt.Printf("castBrightness: %v\n", castBrightness)
 
 		var combBrightness = math.Min(plexBrightness, ps4Brightness)
 		combBrightness = math.Min(combBrightness, castBrightness)
@@ -143,7 +143,7 @@ func mainLoopFunc() {
 		totalBrightness := timeOfDayBrightness * combBrightness
 		brightnessMessages <- totalBrightness * BrightnessFull
 
-		log.Printf("total brightness: %v\n", totalBrightness*BrightnessFull)
+		fmt.Printf("total brightness: %v\n", totalBrightness*BrightnessFull)
 	}
 }
 

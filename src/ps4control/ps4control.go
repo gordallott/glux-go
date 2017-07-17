@@ -1,17 +1,17 @@
 package ps4control
 
 import (
+	"fmt"
 	"os/exec"
 	"strings"
-	"fmt"
 )
 
 const (
 	ps4tool = "ps4-wake"
-	args = "-vPB"
+	args    = "-vPB"
 )
 
-func runCommand() (string,  error) {
+func runCommand() (string, error) {
 	command := exec.Command(ps4tool, args)
 	text, err := command.CombinedOutput()
 	return string(text), err
@@ -32,19 +32,18 @@ func GetPs4State() int {
 
 	if strings.Contains(output, "Device found") {
 		fmt.Printf("have device found")
-		if strings.Contains(output, "Standby") {
+		v := strings.ToLower(output)
+		switch {
+		case strings.Contains(v, "standby"):
 			return StateStopped
-		}
-
-		if strings.Contains(output, "Home") {
+		case strings.Contains(v, "home"):
+			fallthrough
+		case strings.Contains(v, "youtube"):
 			return StatePaused
+		default:
+			return StatePlaying
 		}
-
-		return StatePlaying
 	}
 
 	return StateStopped
 }
-
-
-
